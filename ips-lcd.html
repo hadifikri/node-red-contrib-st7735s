@@ -1,0 +1,1101 @@
+<script type='text/javascript'>
+	RED.nodes.registerType('ips-lcd-config', {
+		category: 'config',
+		defaults: {
+			name: {
+				value: 'IPS LCD',
+				require: false
+			},
+			width: {
+				value: 80,
+				type: 'number',
+				require: true
+			},
+			height: {
+				value: 160,
+				type: 'number',
+				require: true
+			},
+			rotation: {
+				value: 90,
+				type: 'number',
+				require: true
+			},
+			offset_left: {
+				value: 26,
+				type: 'number',
+				require: true
+			},
+			offset_top: {
+				value: 1,
+				type: 'number',
+				require: true
+			},
+			invert: {
+				value: 'False',
+				typeof: 'string',
+				require: true
+			},
+			driver: {
+				value: "ST7735S",
+				typeof: 'string',
+				require: true
+			},
+			port: {
+				value: '0',
+				type: 'number',
+				require: true
+			},
+			cs: {
+				value: 1,
+				type: 'number',
+				require: true
+			},
+			dc: {
+				value: 9,
+				type: 'number',
+				require: true
+			},
+			speed: {
+				value: 4000000,
+				type: 'number',
+				require: true
+			},
+			backlight: {
+				value: 25,
+				type: 'number',
+				require: true
+			},
+			rst: {
+				value: 24,
+				type: 'number',
+				require: true
+			},
+		},
+		label: function () {
+			return this.name;
+		}
+	})
+</script>
+<script type='text/html' data-template-name='ips-lcd-config'>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-config-input-name'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-driver'><i class='fa fa-anchor'></i> Driver</label>
+		<select id="node-config-input-driver">
+			<option selected value="ST7735S">ST7735S</option>
+		</select>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-width'><i class='fa fa-arrows-h'></i> Width</label>
+		<input type='number' id='node-config-input-width' />
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-height'><i class='fa fa-arrows-v'></i> Height</label>
+		<input type='number' id='node-config-input-height' />
+	</div>
+    <div class='form-row'>
+		<label for='node-config-input-rotation'><i class='fa fa-rotate-right'></i> Rotate(Deg)</label>
+		<input type='number' id='node-config-input-rotation' />
+	</div>
+    <div class='form-row'>
+		<label for='node-config-input-offset_left'><i class='fa fa-calculator'></i> Offset Left</label>
+		<input type='number' id='node-config-input-offset_left' />
+	</div>
+    <div class='form-row'>
+		<label for='node-config-input-offset_top'><i class='fa fa-calculator'></i> Offset Top</label>
+		<input type='number' id='node-config-input-offset_top' />
+	</div>
+    <div class='form-row'>
+		<label for='node-config-input-invert'><i class='fa fa-random'></i> Invert</label>
+		<select id="node-config-input-invert">
+			<option value='False'>False</option>
+			<option value='True'>True</option>
+		</select>
+	</div>
+	<div class='form-row'>
+		<hr>
+		<p><b>SPI Configurations</b></p>
+		<hr>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-port'><i class='fa fa-bolt'></i> Port</label>
+		<input type='number' id='node-config-input-port' disabled/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-speed'><i class='fa fa-step-forward'></i> Speed(Hz)</label>
+		<input type='number' id='node-config-input-speed' />
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-cs'><i class='fa fa-exchange'></i> CS(BCM)</label>
+		<input type='number' id='node-config-input-cs' />
+	</div>
+    <div class='form-row'>
+		<label for='node-config-input-dc'><i class='fa fa-exchange'></i> DC(BCM)</label>
+		<input type='number' id='node-config-input-dc' />
+	</div>
+	<div class='form-row'>
+		<hr>
+		<p><b>LCD Controls</b></p>
+		<hr>
+	</div>
+    <div class='form-row'>
+		<label for='node-config-input-backlight'><i class='fa fa-sun-o'></i> BLK(BCM)</label>
+		<input type='number' id='node-config-input-backlight' />
+	</div>
+    <div class='form-row'>
+		<label for='node-config-input-rst'><i class='fa fa-refresh'></i> RES(BCM)</label>
+		<input type='number' id='node-config-input-rst' />
+	</div>
+</script>
+<script type="text/html" data-help-name="ips-lcd-confi">
+    <p>A Node-RED to manage spi IPS LCS display</p>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('Turn-On', {
+		category: 'IPS LCD',
+		color: '#99FF99',
+		icon: 'TftTurnOn.png',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'ips-lcd-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function () {
+			return this.name || "On";
+		}
+	})
+</script>
+<script type='text/html' data-template-name='Turn-On'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa fa-desktop'></i> IPS LCD</span></label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+<script type="text/html" data-help-name="Turn-On">
+    <p>Turn On the LCD Backlight (Set <code>BLK</code> pin)</p>
+    <p><code>Payload</code> : Any</p>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('Turn-Off', {
+		category: 'IPS LCD',
+		color: '#99FF99',
+		icon: 'TftTurnOff.png',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'ips-lcd-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function () {
+			return this.name || "Off";
+		}
+	})
+</script>
+<script type='text/html' data-template-name='Turn-Off'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa fa-desktop'></i> IPS LCD</span></label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+<script type="text/html" data-help-name="Turn-Off">
+    <p>Turn Off the LCD Backlight (Clear <code>BLK</code> pin)</p>
+    <p><code>Payload</code> : Any</p>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('Background', {
+		category: 'IPS LCD',
+		color: '#99FF99',
+		icon: 'TftBackground.png',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'ips-lcd-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function () {
+			return this.name || "Background";
+		}
+	})
+</script>
+<script type='text/html' data-template-name='Background'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa fa-desktop'></i> IPS LCD</span></label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+<script type="text/html" data-help-name="Background">
+    <p>Set the background color of the entire screen </p>
+    <p><code>Payload</code> : <code>{"r":0~255, "g":0~255, "b":0~255}</code></p>
+	<p>Example: Set the background to <b>'Black'</b> when <code>Invert</code> = <code>False</code></p>
+	<code>
+		msg.payload = {
+			"r":0,
+			"g":0,
+			"b":0
+		}
+	</code>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('Ellipse', {
+		category: 'IPS LCD',
+		color: '#99FF99',
+		icon: 'TftEllipse.png',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'ips-lcd-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function () {
+			return this.name || "Ellipse";
+		}
+	})
+</script>
+<script type='text/html' data-template-name='Ellipse'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa fa-desktop'></i> IPS LCD</span></label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+<script type="text/html" data-help-name="Ellipse">
+    <p>Draw an ellipse within the specified bounding box <code>(x0,y0,x1,y1)</code></p>
+	<h3>Inputs</h3> 
+	<dl class="message-properties">
+		<dt>payload
+			<span class="property-type">JSON</span>
+		</dt>
+		<dd> The input payload to draw the ellipse, The <code>outline</code>, 
+			<code>fill</code> and <code>width</code> are optionals. Defaulted to "White" with a stroke width of 1. 
+		</dd>
+		<dd>
+			<code>
+				<pre>
+<!--         -->{
+<!--         -->	"x0":&ltcol&gt, 
+<!--         -->	"y0":&ltrow&gt, 
+<!--         -->	"x1":&ltcol&gt, 
+<!--         -->	"y1":&ltrow&gt,
+<!--         -->	"outline":{
+<!--         -->		"r":0~255,
+<!--         -->		"g":0~255,
+<!--         -->		"b":0~255
+<!--         -->	},
+<!--         -->	"fill":{
+<!--         -->		"r":0~255,
+<!--         -->		"g":0~255,
+<!--         -->		"b":0~255
+<!--         -->	},
+<!--         -->	"width":&ltstroke width&gt
+<!--         -->}
+				</pre>
+				
+			</code>
+		</dd>
+		
+	</dl>
+
+	<p>
+		<b>Example</b>: Draw an ellipes within the bounding box. White fill with a Green outline and a stroke width of 4
+	</p>
+	<dd><code>
+		<pre>
+<!--  -->msg.payload = {
+<!--  -->	"x0":30,
+<!--  -->	"y0":30,
+<!--  -->	"x1":130,
+<!--  -->	"y1":50,
+<!--  -->	"outline":{
+<!--  -->		"r":0,
+<!--  -->		"g":255,
+<!--  -->		"b":0
+<!--  -->	},
+<!--  -->	"fill":{
+<!--  -->		"r":255,
+<!--  -->		"g":255,
+<!--  -->		"b":255
+<!--  -->	},
+<!--  -->	"width":4
+}
+		</pre>
+	</code></dd>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('Lines', {
+		category: 'IPS LCD',
+		color: '#99FF99',
+		icon: 'TftLine.png',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'ips-lcd-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function () {
+			return this.name || "Lines";
+		}
+	})
+</script>
+<script type='text/html' data-template-name='Lines'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa fa-desktop'></i> IPS LCD</span></label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+<script type="text/html" data-help-name="Lines">
+    <p>Draw a jointed lines specified by an array of coordinates</p>
+	<h3>Inputs</h3> 
+	<dl class="message-properties">
+		<dt>payload
+			<span class="property-type">JSON</span>
+		</dt>
+		<dd> 
+			The input payload to draw the lines.  
+			The <code>fill</code> and <code>width</code> are optionals. Defaulted to "White" with a stroke width of 1. 
+		</dd>
+		<dd>
+			<code>
+				<pre>
+<!--         -->{
+<!--         -->	"points":[
+<!--         -->		&ltx0&gt,&lty0&gt,
+<!--         -->		&ltx1&gt,&lty1&gt,
+<!--         -->		...,
+<!--         -->		&ltxn&gt,&ltyn&gt,
+<!--         -->	], 
+<!--         -->	"fill":{
+<!--         -->		"r":0~255,
+<!--         -->		"g":0~255,
+<!--         -->		"b":0~255
+<!--         -->	},
+<!--         -->	"width":&ltstroke width&gt
+<!--         -->}
+				</pre>
+			</code>
+		</dd>
+	</dl>
+
+	<p>
+		<b>Example</b>: Draw 2 jointed lines. White fill with a stroke width of 3
+	</p>
+	<dd><code>
+		<pre>
+<!--  -->msg.payload = {
+<!--  -->	"points":[
+<!--  -->		15,15,
+<!--  -->		145,65
+<!--  -->	],
+<!--  -->	"fill":{
+<!--  -->		"r":255,
+<!--  -->		"g":255,
+<!--  -->		"b":255
+<!--  -->	},
+<!--  -->	"width":3
+<!--  -->}
+		</pre>
+	</code></dd>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('Pixels', {
+		category: 'IPS LCD',
+		color: '#99FF99',
+		icon: 'TftPixel.png',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'ips-lcd-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function () {
+			return this.name || "Pixels";
+		}
+	})
+</script>
+<script type='text/html' data-template-name='Pixels'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa fa-desktop'></i> IPS LCD</span></label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+<script type="text/html" data-help-name="Pixels">
+    <p>Draw a bunch of pixels specified by an array of coordinates</p>
+	<h3>Inputs</h3> 
+	<dl class="message-properties">
+		<dt>payload
+			<span class="property-type">JSON</span>
+		</dt>
+		<dd> 
+			The input payload to draw the pixels.  
+			The <code>fill</code> is optional. Defaulted to "White". 
+		</dd>
+		<dd>
+			<code>
+				<pre>
+<!--         -->{
+<!--         -->	"points":[
+<!--         -->		&ltx0&gt,&lty0&gt,
+<!--         -->		&ltx1&gt,&lty1&gt,
+<!--         -->		...,
+<!--         -->		&ltxn&gt,&ltyn&gt,
+<!--         -->	], 
+<!--         -->	"fill":{
+<!--         -->		"r":0~255,
+<!--         -->		"g":0~255,
+<!--         -->		"b":0~255
+<!--         -->	},
+<!--         -->}
+				</pre>
+			</code>
+		</dd>
+	</dl>
+
+	<p>
+		<b>Example</b>: Draw 4 white pixels on each corners.
+	</p>
+	<dd><code>
+		<pre>
+<!--  -->msg.payload = {
+<!--  -->	"points":[
+<!--  -->		0,0,
+<!--  -->		160,0,
+<!--  -->		160,80,
+<!--  -->		0,80
+<!--  -->	],
+<!--  -->	"fill":{
+<!--  -->		"r":255,
+<!--  -->		"g":255,
+<!--  -->		"b":255
+<!--  -->	}
+<!--  -->}
+		</pre>
+	</code></dd>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('Polygon', {
+		category: 'IPS LCD',
+		color: '#99FF99',
+		icon: 'TftPolygon.png',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'ips-lcd-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function () {
+			return this.name || "Polygon";
+		}
+	})
+</script>
+<script type='text/html' data-template-name='Polygon'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa fa-desktop'></i> IPS LCD</span></label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+<script type="text/html" data-help-name="Polygon">
+    <p>Draw a polygon specified by an array of coordinates. The last point will be connected to the first point</p>
+	<h3>Inputs</h3> 
+	<dl class="message-properties">
+		<dt>payload
+			<span class="property-type">JSON</span>
+		</dt>
+		<dd> 
+			The input payload to draw the polygon.  
+			The <code>outline</code> and <code>fill</code> are optional. Defaulted to "White". 
+		</dd>
+		<dd>
+			<code>
+				<pre>
+<!--         -->{
+<!--         -->	"points":[
+<!--         -->		&ltx0&gt,&lty0&gt,
+<!--         -->		&ltx1&gt,&lty1&gt,
+<!--         -->		...,
+<!--         -->		&ltxn&gt,&ltyn&gt,
+<!--         -->	], 
+<!--         --> 	"outline":{
+<!--         --> 		"r":0~255,
+<!--         --> 		"g":0~255,
+<!--         --> 		"b":0~255
+<!--         --> 	},
+<!--         -->	"fill":{
+<!--         -->		"r":0~255,
+<!--         -->		"g":0~255,
+<!--         -->		"b":0~255
+<!--         -->	},
+<!--         -->}
+				</pre>
+			</code>
+		</dd>
+	</dl>
+
+	<p>
+		<b>Example</b>: Draw a triangle.
+	</p>
+	<dd><code>
+		<pre>
+<!--  -->msg.payload = {
+<!--  -->	"points":[
+<!--  -->		80,10,
+<!--  -->		150,70,
+<!--  -->		10,70
+<!--  -->	],
+<!--  --> 	"outline":{
+<!--  --> 		"r":255,
+<!--  --> 		"g":0,
+<!--  --> 		"b":0
+<!--  --> 	},
+<!--  -->	"fill":{
+<!--  -->		"r":0,
+<!--  -->		"g":0,
+<!--  -->		"b":255
+<!--  -->	}
+<!--  -->}
+		</pre>
+	</code></dd>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('FillBox', {
+		category: 'IPS LCD',
+		color: '#99FF99',
+		icon: 'TftFillBox.png',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'ips-lcd-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function () {
+			return this.name || "FillBox";
+		}
+	})
+</script>
+<script type='text/html' data-template-name='FillBox'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa fa-desktop'></i> IPS LCD</span></label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+<script type="text/html" data-help-name="FillBox">
+    <p>Draw a rectangular box specified by (x0,y0,width,height) bounding box.</p>
+	<h3>Inputs</h3> 
+	<dl class="message-properties">
+		<dt>payload
+			<span class="property-type">JSON</span>
+		</dt>
+		<dd> 
+			The input payload to draw the rectangular box.  
+			The <code>weight</code>, <code>outline</code> and <code>fill</code> are optional. Defaulted to "White". 
+		</dd>
+		<dd>
+			<code>
+				<pre>
+<!--         -->{
+<!--         -->	"x0":&lt0~(width-1)&gt,
+<!--         -->	"y1":&lt0~(heiht-1)&gt,
+<!--         -->	"width":&ltx0~(width-1)&gt,
+<!--         -->	"height":&lty0~(height-1)&gt,
+<!--         --> 	"outline":{
+<!--         --> 		"r":0~255,
+<!--         --> 		"g":0~255,
+<!--         --> 		"b":0~255
+<!--         --> 	},
+<!--         -->	"fill":{
+<!--         -->		"r":0~255,
+<!--         -->		"g":0~255,
+<!--         -->		"b":0~255
+<!--         -->	},
+<!--         -->    "weight":&ltstroke width&gt
+<!--         -->}
+				</pre>
+			</code>
+		</dd>
+	</dl>
+
+	<p>
+		<b>Example</b>: Draw a rectangular box.
+	</p>
+	<dd><code>
+		<pre>
+<!--  -->msg.payload = {
+<!--  -->	"x0":10,
+<!--  -->   "y0":10,
+<!--  -->	"width":140,
+<!--  -->	"height":60,
+<!--  --> 	"outline":{
+<!--  --> 		"r":255,
+<!--  --> 		"g":0,
+<!--  --> 		"b":0
+<!--  --> 	},
+<!--  -->	"fill":{
+<!--  -->		"r":0,
+<!--  -->		"g":0,
+<!--  -->		"b":255
+<!--  -->	},
+<!--  -->   "weight":4
+<!--  -->}
+		</pre>
+	</code></dd>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('TextString', {
+		category: 'IPS LCD',
+		color: '#99FF99',
+		icon: 'TftTextString.png',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'ips-lcd-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function () {
+			return this.name || "TextString";
+		}
+	})
+</script>
+<script type='text/html' data-template-name='TextString'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa fa-desktop'></i> IPS LCD</span></label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+<script type="text/html" data-help-name="TextString">
+    <p>
+		Draw a text aligned to the top-left alignment with an optional angle, color, font and font size.
+		Only true type fonts are supported. By default the font is assumed to be installed in
+		<code>/usr/share/fonts/truetype</code>. 
+	</p>
+	<p>Font format: <code>font-folder/font-name</code> e.g. <code>dejavu/DejaVuSansMono-Bold.ttf</code> or full <b>absolute path</b></p>
+
+	<h3>Inputs</h3> 
+	<dl class="message-properties">
+		<dt>payload
+			<span class="property-type">JSON</span>
+		</dt>
+		<dd> 
+			The input payload to draw the text.  
+			The <code>angle</code>, <code>font</code> ,<code>fontSize</code> and <code>color</code> are optional. 
+		</dd>
+		<dd>
+			<code>
+				<pre>
+<!--         -->{
+<!--         -->	"text":&ltstring&gt,
+<!--         --> 	"x":&lt0~(width-1)&gt,
+<!--         -->	"y":&lt0~(height-1)&gt,
+<!--         -->	"angle":&lt0~360&gt,
+<!--         -->	"font":&ltyfont-path-filename&gt,
+<!--         --> 	"fontSize":&ltnumber&gt,
+<!--         -->	"color":{
+<!--         -->		"r":0~255,
+<!--         -->		"g":0~255,
+<!--         -->		"b":0~255
+<!--         -->	}
+<!--         -->}
+				</pre>
+			</code>
+		</dd>
+	</dl>
+
+	<p>
+		<b>Example</b>: Draw a text with the specified font.
+	</p>
+	<dd><code>
+		<pre>
+<!--  -->msg.payload = {
+<!--  -->	"text":"Hello World!",
+<!--  -->	"x":5,
+<!--  -->	"y":3,
+<!--  -->	"angle":90,
+<!--  --> 	"font":"dejavu/DejaVuSans-Bold.ttf",
+<!--  --> 	"fontSize":8,
+<!--  -->	"color":{
+<!--  -->		"r":255,
+<!--  -->		"g":0,
+<!--  -->		"b":255
+<!--  -->	}
+<!--  -->}
+		</pre>
+	</code></dd>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('TextScroll', {
+		category: 'IPS LCD',
+		color: '#99FF99',
+		icon: 'TftTextScroll.png',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'ips-lcd-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function () {
+			return this.name || "TextScroll";
+		}
+	})
+</script>
+<script type='text/html' data-template-name='TextScroll'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa fa-desktop'></i> IPS LCD</span></label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+<script type="text/html" data-help-name="TextScroll">
+    <p>
+		Scroll a vertically centered text horizontally with an optional color, font and font size.
+		Only true type fonts are supported. By default the font is assumed to be installed in
+		<code>/usr/share/fonts/truetype</code>. 
+	</p>
+	<p>Font format: <code>font-folder/font-name</code> e.g. <code>dejavu/DejaVuSansMono-Bold.ttf</code> or full <b>absolute path</b></p>
+
+	<h3>Inputs</h3> 
+	<dl class="message-properties">
+		<dt>payload
+			<span class="property-type">JSON</span>
+		</dt>
+		<dd> 
+			The input payload to draw the text.  
+			The <code>font</code> ,<code>fontSize</code> and <code>color</code> are optional. 
+		</dd>
+		<dd>
+			<code>
+				<pre>
+<!--         -->{
+<!--         -->	"text":&ltstring&gt,
+<!--         -->	"font":&ltyfont-path-filename&gt,
+<!--         --> 	"fontSize":&ltnumber&gt,
+<!--         -->	"color":{
+<!--         -->		"r":0~255,
+<!--         -->		"g":0~255,
+<!--         -->		"b":0~255
+<!--         -->	}
+<!--         -->}
+				</pre>
+			</code>
+		</dd>
+	</dl>
+
+	<p>
+		<b>Example</b>: Draw a text with the specified font.
+	</p>
+	<dd><code>
+		<pre>
+<!--  -->msg.payload = {
+<!--  -->	"text":"Hello World!",
+<!--  --> 	"font":"dejavu/DejaVuSans-Bold.ttf",
+<!--  --> 	"fontSize":8,
+<!--  -->	"color":{
+<!--  -->		"r":255,
+<!--  -->		"g":0,
+<!--  -->		"b":255
+<!--  -->	}
+<!--  -->}
+		</pre>
+	</code></dd>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('TextStop', {
+		category: 'IPS LCD',
+		color: '#99FF99',
+		icon: 'TftTextScroll.png',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'ips-lcd-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function () {
+			return this.name || "TextStop";
+		}
+	})
+</script>
+<script type='text/html' data-template-name='TextStop'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa fa-desktop'></i> IPS LCD</span></label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+<script type="text/html" data-help-name="TextStop">
+    <p>
+		Stop the text scrolling.
+	</p>
+
+	<h3>Inputs</h3> 
+	<dl class="message-properties">
+		<dt>payload
+			<span class="property-type">Any</span>
+		</dt>
+	</dl>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('ImageShow', {
+		category: 'IPS LCD',
+		color: '#99FF99',
+		icon: 'TftShowImage.png',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'ips-lcd-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function () {
+			return this.name || "ImageShow";
+		}
+	})
+</script>
+<script type='text/html' data-template-name='ImageShow'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa fa-desktop'></i> IPS LCD</span></label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+<script type="text/html" data-help-name="ImageShow">
+    <p>
+		Draw an Image. Automatically resized by PIL. Requires the image full <code>absolute path</code>. 
+		Two test image available (<code>cat.jpg</code>, <code>lena.png</code>) 
+	</p>
+
+	<h3>Inputs</h3> 
+	<dl class="message-properties">
+		<dt>payload
+			<span class="property-type">String</span>
+		</dt>
+		<dd> 
+			The input payload representing the full image path.  
+		</dd>
+	</dl>
+
+	<p>
+		<b>Example</b>: 'cat.png'.
+	</p>
+	<dd><code>
+		<pre>
+<!--  -->msg.payload = "cat.png"
+		</pre>
+	</code></dd>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('PlayGif', {
+		category: 'IPS LCD',
+		color: '#99FF99',
+		icon: 'TftGifStart.png',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'ips-lcd-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function () {
+			return this.name || "PlayGif";
+		}
+	})
+</script>
+<script type='text/html' data-template-name='PlayGif'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa fa-desktop'></i> IPS LCD</span></label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+<script type="text/html" data-help-name="PlayGif">
+    <p>
+		Play a Gif file in a loop until stop signal is given. 
+		Requires the Gif full <code>absolute path</code>. 
+		Test image available (<code>deployrainbow.gif</code>) 
+	</p>
+
+	<h3>Inputs</h3> 
+	<dl class="message-properties">
+		<dt>payload
+			<span class="property-type">String</span>
+		</dt>
+		<dd> 
+			The input payload representing the full gif path.  
+		</dd>
+	</dl>
+
+	<p>
+		<b>Example</b>: 'deployrainbow.gif'.
+	</p>
+	<dd><code>
+		<pre>
+<!--  -->msg.payload = "deployrainbow.gif"
+		</pre>
+	</code></dd>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('StopGif', {
+		category: 'IPS LCD',
+		color: '#99FF99',
+		icon: 'TftGifStart.png',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'ips-lcd-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function () {
+			return this.name || "StopGif";
+		}
+	})
+</script>
+<script type='text/html' data-template-name='StopGif'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa fa-desktop'></i> IPS LCD</span></label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+<script type="text/html" data-help-name="StopGif">
+    <p>
+		Stop a Gif loop.
+	</p>
+
+	<h3>Inputs</h3> 
+	<dl class="message-properties">
+		<dt>payload
+			<span class="property-type">Any</span>
+		</dt>
+	</dl>
+</script>

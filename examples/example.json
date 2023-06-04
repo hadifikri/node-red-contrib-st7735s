@@ -1,0 +1,30 @@
+[
+    {
+        "id": "c5c0ac5fc787141b",
+        "type": "Background",
+        "z": "9faf99dc6dc85372",
+        "name": "",
+        "display": "cab7b8678fed77e6",
+        "x": 670,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "cab7b8678fed77e6",
+        "type": "ips-lcd-config",
+        "name": "IPS LCD",
+        "width": "80",
+        "height": "160",
+        "rotation": "90",
+        "offset_left": "24",
+        "offset_top": "0",
+        "invert": "False",
+        "driver": "ST7735S",
+        "port": "0",
+        "cs": "1",
+        "dc": "9",
+        "speed": "4000000",
+        "backlight": "25",
+        "rst": "24"
+    }
+]

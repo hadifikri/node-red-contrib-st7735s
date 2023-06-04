@@ -1,0 +1,35 @@
+{
+  "name": "node-red-contrib-st7735s",
+  "version": "0.0.1",
+  "description": "IPS LCD for ST7735s controller",
+  "main": "index.js",
+  "engines": {
+    "node": ">=14.0.0",
+    "python": ">=3.8"
+  },
+  "node-red": {
+    "version": ">=1.0.0",
+    "nodes": {
+      "ips-lcd": "ips-lcd.js"
+    }
+  },
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Abdul Hadi Fikri <hadifikri@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "pythonia": "^1.0.2"
+  },
+  "keywords": [
+    "ST7735S",
+    "Pimoroni",
+    "HAT-mini",
+    "IPS LCD",
+    "JSPyBridge",
+    "Raspberry Pi"
+  ]
+}
