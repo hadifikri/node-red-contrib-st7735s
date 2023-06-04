@@ -31,5 +31,13 @@
     "IPS LCD",
     "JSPyBridge",
     "Raspberry Pi"
-  ]
+  ],
+  "bugs": {
+    "url": "https://github.com/hadifikri/node-red-contrib-st7735s/issues"
+  },
+  "homepage": "https://github.com/hadifikri/node-red-contrib-st7735s",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hadifikri/node-red-contrib-st7735s.git"
+  }
 }
